@@ -1,0 +1,15 @@
+{
+  "name": "bdd",
+  "version": "1.0.0",
+  "description": "demo proyecto calidad",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js --require 'step_definitions/**/*.js'"
+  },
+  "author": "ferojasmel",
+  "license": "MIT",
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.0.1",
+    "selenium-webdriver": "^4.15.0"
+  }
+}
