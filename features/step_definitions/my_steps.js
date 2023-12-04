@@ -1,4 +1,4 @@
-const { Given, When, Then, setDefaultTimeout } = require('@cucumber/cucumber');
+const { Given, When, Then, setDefaultTimeout, After, Before } = require('@cucumber/cucumber');
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const assert = require('assert');
@@ -10,11 +10,15 @@ const chromeDriverPath = path.resolve('/Users/ferdorom/Documents/cenfotec/Calida
 setDefaultTimeout(20 * 1000); // Establece el tiempo de espera a 20 segundos
 
 
-let driver = new Builder()
-    .forBrowser('chrome')
-    .setChromeOptions(new chrome.Options().setChromeBinaryPath(chromeDriverPath).addArguments("--start-fullscreen"))
-    .build();
+let driver;
 
+Before(async function () {
+    // Inicializar el driver antes de cada escenario
+    driver = new Builder()
+        .forBrowser('chrome')
+        .setChromeOptions(new chrome.Options().setChromeBinaryPath(chromeDriverPath).addArguments("--start-fullscreen"))
+        .build();
+});
 // Given(s)
 
 Given('el navegador Chrome está abierto', async function () {
@@ -77,5 +81,9 @@ Then('debería existir la maestría en {string}', async function (programName) {
     assert(found, `La maestría '${programName}' no fue encontrada en la página`);
 });
 
+// Este hook se ejecutará después de cada escenario
+After(async function () {
+    await driver.quit(); // Cierra el navegador
+});
 
 
